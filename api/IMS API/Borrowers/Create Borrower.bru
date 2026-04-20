@@ -1,0 +1,24 @@
+meta {
+  name: Create Borrower
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:3000/api/borrowers
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "first_name": "Juan",
+    "last_name": "Perez",
+    "dni": "12345678"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

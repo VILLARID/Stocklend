@@ -1,0 +1,25 @@
+meta {
+  name: Create Loan
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:3000/api/loans
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "item_type_id": 4,
+    "borrower_id": 1,
+    "admin_id": 1,
+    "quantity": 999
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
