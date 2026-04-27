@@ -13,10 +13,12 @@ const healthRoutes = require("./routes/health.routes");
 const itemTypesRoutes = require("./routes/itemTypes.routes");
 const borrowersRoutes = require("./routes/borrowers.routes");
 const loansRoutes = require("./routes/loans.routes");
+const dashboardRoutes = require("./routes/dashboard.routes");
 
 app.use("/api/health", healthRoutes);
 app.use("/api/item-types", itemTypesRoutes);
 app.use("/api/borrowers", borrowersRoutes);
 app.use("/api/loans", loansRoutes);
+app.use("/api/dashboard", dashboardRoutes);
 
 module.exports = app;
