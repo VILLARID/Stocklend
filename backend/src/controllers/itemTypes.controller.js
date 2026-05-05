@@ -1,6 +1,6 @@
 const itemTypesService = require("../services/itemTypes.service");
 
-// GET ALL
+// GET
 const getAllItemTypes = async (req, res) => {
     try {
         const item_types = await itemTypesService.getAllItemTypes();
@@ -26,7 +26,6 @@ const createItemType = async (req, res) => {
     try {
         const { name, description, category_id, total_quantity } = req.body;
 
-        // VALIDACIONES
         if (!name || !category_id || total_quantity === undefined) {
             return res.status(400).json({
                 success: false,
@@ -48,7 +47,6 @@ const createItemType = async (req, res) => {
             total_quantity,
         });
 
-        // 🔥 FIX BIGINT
         res.status(201).json({
             success: true,
             message: "Item type created successfully",

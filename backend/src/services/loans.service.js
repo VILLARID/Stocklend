@@ -1,6 +1,6 @@
 const pool = require("../config/db");
 
-// 🔥 CREATE LOAN (FASE 2 COMPLETA)
+// CREATE LOAN 
 const createLoan = async ({ item_type_id, borrower_id, admin_id, quantity }) => {
     let conn;
 
@@ -60,7 +60,6 @@ const createLoan = async ({ item_type_id, borrower_id, admin_id, quantity }) => 
     }
 };
 
-// 🔥 RETURN LOAN
 const returnLoan = async (loanId) => {
     let conn;
 

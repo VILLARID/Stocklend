@@ -6,7 +6,6 @@ const getSummary = async () => {
     try {
         conn = await pool.getConnection();
 
-        // 🔥 1. ITEMS
         const items = await conn.query(`
             SELECT 
                 SUM(total_quantity) AS total_items,
@@ -19,7 +18,6 @@ const getSummary = async () => {
 
         const borrowedItems = totalItems - availableItems;
 
-        // 🔥 2. LOANS ACTIVOS
         const loans = await conn.query(`
             SELECT COUNT(*) AS active_loans
             FROM loans

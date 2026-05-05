@@ -17,12 +17,12 @@ app.use("/item-types", itemTypesRoutes);
 
 app.get("/", (req, res) => {
   res.json({
-    message: "Stocklend backend running 🚀"
+    message: "Stocklend backend running"
   });
 });
 
 const PORT = 3000;
 
 app.listen(PORT, () => {
-  console.log(`Stocklend backend running on port ${PORT} 🚀`);
+  console.log(`Stocklend backend running on port ${PORT}`);
 });
