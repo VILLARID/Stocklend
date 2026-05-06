@@ -1,7 +1,7 @@
 import { useState } from "react";
 import logo from "../assets/logo.png";
 import { Home, Package, ClipboardList, History } from "lucide-react";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 
 function Sidebar() {
 
@@ -15,10 +15,10 @@ function Sidebar() {
     ];
 
     return (
-        <div className="flex flex-col h-screen w-1/5 shadow-sm p-4 bg-[#111827] text-white">
+        <div className="flex flex-col h-screen w-1/6 shadow-sm p-4 bg-[#111827] text-white">
 
             {/* TITLE */}
-            <div className="flex items-center text-2xl font-medium p-3 gap-2">
+            <div className="flex items-center text-2xl font-medium p-3">
                 <img src={logo} alt="Logo" className="w-10" />
                 <span className="text-[#374151]">Stock</span>
                 <span className="text-[#10b981]">Lend</span>
@@ -35,16 +35,17 @@ function Sidebar() {
 
                         return (
                             <li key={link.name}>
-                                <a
-                                    href={link.path}
-                                    className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors duration-200 ${location.pathname === link.path
-                                        ? "bg-[#1e2937]"
+                                <Link
+                                    to={link.path}
+                                    className={`flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-[#818181] transition-colors duration-300 ${
+                                        location.pathname === link.path
+                                        ? "bg-[#10b981] text-white"
                                         : "hover:bg-[#1e2937]"
                                         }`}
                                 >
                                     <Icon className="w-5 h-5" />
                                     {link.name}
-                                </a>
+                                </Link>
                             </li>
                         );
                     })}
