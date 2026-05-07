@@ -1,4 +1,4 @@
-function CreateModal({ isOpen, onClose }) {
+function EditModal({ isOpen, onClose, item }) {
 
     if (!isOpen) return null;
 
@@ -11,7 +11,7 @@ function CreateModal({ isOpen, onClose }) {
                 <div className="flex justify-between items-center px-6 py-5 border-b border-gray-200">
 
                     <h2 className="text-xl font-semibold text-gray-800">
-                        Nuevo artículo
+                        Editar artículo
                     </h2>
 
                     <button
@@ -34,7 +34,7 @@ function CreateModal({ isOpen, onClose }) {
 
                         <input
                             type="text"
-                            placeholder="Ej: Batidora KitchenAid"
+                            defaultValue={item?.name}
                             className="border border-gray-300 px-4 py-3 rounded-xl outline-none focus:ring-2 focus:ring-emerald-500"
                         />
                     </div>
@@ -47,7 +47,7 @@ function CreateModal({ isOpen, onClose }) {
 
                         <input
                             type="text"
-                            placeholder="Ej: Electrodomésticos"
+                            defaultValue={item?.category}
                             className="border border-gray-300 px-4 py-3 rounded-xl outline-none focus:ring-2 focus:ring-emerald-500"
                         />
                     </div>
@@ -60,7 +60,7 @@ function CreateModal({ isOpen, onClose }) {
 
                         <input
                             type="number"
-                            placeholder="Ej: 12"
+                            defaultValue={item?.stock}
                             className="border border-gray-300 px-4 py-3 rounded-xl outline-none focus:ring-2 focus:ring-emerald-500"
                         />
                     </div>
@@ -80,7 +80,7 @@ function CreateModal({ isOpen, onClose }) {
                             type="submit"
                             className="w-1/2 px-5 py-2.5 rounded-xl bg-emerald-500 text-white hover:bg-emerald-600 duration-200"
                         >
-                            Crear artículo
+                            Guardar cambios
                         </button>
 
                     </div>
@@ -93,4 +93,4 @@ function CreateModal({ isOpen, onClose }) {
     )
 }
 
-export default CreateModal;
+export default EditModal;

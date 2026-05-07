@@ -1,4 +1,17 @@
+import { useState } from "react";
+import { Plus, Pen, Trash } from "lucide-react";
+import EditModal from "./EditModal";
+import DeleteModal from "./DeleteModal";
+
 function InventoryTable() {
+
+    const [isEditOpen, setIsEditOpen] = useState(false);
+    const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+    const [selectedItem, setSelectedItem] = useState(null);
+
+    const actionButtons = "flex justify-center items-center w-9 h-9 hover:bg-gray-200 rounded-lg duration-300"
+    const headTableStyles = "px-6 py-5 font-medium text-gray-500 text-sm"
+    const bodyTableStyles = "px-6 py-5 font-normal text-sm"
 
     const items = [
         {
@@ -9,8 +22,8 @@ function InventoryTable() {
         },
         {
             id: 2,
-            name: "Vasos de vidrio",
-            category: "Cocina",
+            name: "Batidora",
+            category: "Electrodomésticos",
             stock: 8
         },
         {
@@ -18,71 +31,109 @@ function InventoryTable() {
             name: "Sartenes",
             category: "Cocina",
             stock: 2
-        }
-    ]
+        },
+        {
+            id: 4,
+            name: "Licuadora",
+            category: "Electrodomésticos",
+            stock: 5
+        },
+        {
+            id: 5,
+            name: "Tenedores de acero",
+            category: "Cubertería",
+            stock: 40
+        },
+    ];
 
     return (
-        <div className="w-full bg-white shadow-lg rounded-2xl overflow-hidden">
-
-            <div className="w-full overflow-x-auto">
-
-                <table className="w-full table-fixed text-left">
+        <>
+            <div>
+                <table className="w-full text-left border-collapse shadow-md border border-gray-500 rounded-lg overflow-hidden">
 
                     {/* Header */}
-                    <thead className="bg-gray-100 text-gray-600 text-sm">
-                        <tr>
-                            <th className="px-6 py-4 w-2/5">Artículo</th>
-                            <th className="px-6 py-4 w-1/5">Categoría</th>
-                            <th className="px-6 py-4 w-1/5">Stock</th>
-                            <th className="px-6 py-4 w-1/5">Acciones</th>
+                    <thead className="bg-gray-100">
+                        <tr className="border-b border-gray-200">
+
+                            <th className={headTableStyles}>NOMBRE</th>
+                            <th className={headTableStyles}>CATEGORÍA</th>
+                            <th className={headTableStyles}>CANTIDAD</th>
+                            <th className={`${headTableStyles} text-right`}>ACCIONES</th>
+
                         </tr>
                     </thead>
 
                     {/* Body */}
-                    <tbody className="text-gray-700">
-
-                        {items.map((item) => (
+                    <tbody>
+                        {items.map(item => (
                             <tr
                                 key={item.id}
-                                className="border-b hover:bg-gray-50 transition"
+                                className="border-b border-gray-200 hover:bg-gray-100 duration-300"
                             >
-                                <td className="px-6 py-4 font-medium">
+
+                                <td className={bodyTableStyles}>
                                     {item.name}
                                 </td>
 
-                                <td className="px-6 py-4">
-                                    {item.category}
+                                <td className={bodyTableStyles}>
+                                    <span className="bg-gray-200 px-2 py-1 rounded-lg text-gray-500">
+                                        {item.category}
+                                    </span>
                                 </td>
 
-                                <td className="px-6 py-4 font-medium">
+                                <td className={bodyTableStyles}>
                                     {item.stock}
                                 </td>
 
-                                <td className="px-6 py-4">
+                                <td className="px-6 py-5">
+                                    <div className="flex justify-end gap-2">
 
-                                    <div className="flex gap-4">
-
-                                        <button className="text-blue-500 hover:underline">
-                                            Editar
+                                        {/* EDIT */}
+                                        <button
+                                            onClick={() => {
+                                                setSelectedItem(item);
+                                                setIsEditOpen(true);
+                                            }}
+                                            className={`${actionButtons} hover:bg-green-100`}
+                                        >
+                                            <Pen className="w-4 h-4" />
                                         </button>
 
-                                        <button className="text-red-500 hover:underline">
-                                            Eliminar
+                                        {/* DELETE */}
+                                        <button
+                                            onClick={() => {
+                                                setSelectedItem(item);
+                                                setIsDeleteOpen(true);
+                                            }}
+                                            className={`${actionButtons} hover:bg-red-100`}
+                                        >
+                                            <Trash className="w-4 h-4" />
                                         </button>
 
                                     </div>
-
                                 </td>
+
                             </tr>
                         ))}
-
                     </tbody>
 
                 </table>
-
             </div>
 
-        </div>
+            {/* EDIT MODAL */}
+            <EditModal
+                isOpen={isEditOpen}
+                onClose={() => setIsEditOpen(false)}
+                item={selectedItem}
+            />
+
+            {/* DELETE MODAL */}
+            <DeleteModal
+                isOpen={isDeleteOpen}
+                onClose={() => setIsDeleteOpen(false)}
+                item={selectedItem}
+            />
+        </>
     )
 }
 
