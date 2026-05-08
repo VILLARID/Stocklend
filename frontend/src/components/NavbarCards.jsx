@@ -2,10 +2,10 @@ import { ArrowLeftRight, CircleCheckBig, CircleAlert } from "lucide-react";
 
 function NavbarCards() {
 
-    const cardStyle = "flex rounded-xl items-center py-2 px-5 gap-1 hover:scale-105 duration-200 cursor-pointer";
+    const cardStyle = "flex rounded-xl items-center py-2 px-3 gap-3 hover:scale-105 duration-200 cursor-pointer";
     return (
         <>
-            <div className="flex gap-10">
+            <div className="flex gap-5">
                 { /* Active */}
                 <div className={`${cardStyle} bg-blue-100`}>
                     <ArrowLeftRight className=" w-5 h-5 text-blue-500" />

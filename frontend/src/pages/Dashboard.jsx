@@ -7,7 +7,7 @@ function Dashboard() {
 
             {/* Header */}
             <div className="flex flex-col gap-2">
-                <h1 className="font-semibold text-3xl">Dashboard</h1>
+                <h1 className="font-semibold text-3xl">Panel de Control</h1>
                 <p className="text-gray-400">Resumen general del sistema</p>
             </div>
 

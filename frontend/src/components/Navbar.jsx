@@ -6,10 +6,10 @@ function Navbar() {
     const location = useLocation();
 
     const titles = {
-        "/": "Panel de Control",
-        "/inventario": "Gestión de Inventario",
-        "/prestamos": "Préstamos Activos",
-        "/historial": "Registro Histórico",
+        "/": "Dashboard General",
+        "/inventario": "Administración de Inventario",
+        "/prestamos": "Control de Préstamos",
+        "/historial": "Historial del Sistema",
     };
 
     return (

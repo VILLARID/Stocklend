@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 import Sidebar from "./components/Sidebar";
 import Navbar from "./components/Navbar";
 
@@ -12,17 +13,17 @@ function App() {
     <BrowserRouter>
       <div className="flex h-screen">
 
-        {/* Sidebar left */}
+        {/* Sidebar */}
         <Sidebar />
 
-        {/* Right-hand content */}
+        {/* Content */}
         <div className="flex flex-col flex-1">
 
-          {/* Navbar up */}
+          {/* Navbar */}
           <Navbar />
 
           {/* Pages */}
-          <div className="flex-1 p-4 overflow-auto">
+          <div className="flex-1 p-4 pt-6 overflow-auto">
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/inventario" element={<Inventory />} />
