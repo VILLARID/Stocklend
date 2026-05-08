@@ -20,7 +20,7 @@ function Sidebar() {
             {/* TITLE */}
             <div className="flex items-center text-2xl font-medium p-3">
                 <img src={logo} alt="Logo" className="w-10" />
-                <span className="text-[#374151]">Stock</span>
+                <span className="text-[#ffffff]">Stock</span>
                 <span className="text-[#10b981]">Lend</span>
             </div>
 

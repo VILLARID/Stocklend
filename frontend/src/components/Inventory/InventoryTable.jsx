@@ -44,6 +44,12 @@ function InventoryTable() {
             category: "Cubertería",
             stock: 40
         },
+        {
+            id: 6,
+            name: "Microondas",
+            category: "Electrodomésticos",
+            stock: 5
+        },
     ];
 
     return (
@@ -94,9 +100,9 @@ function InventoryTable() {
                                                 setSelectedItem(item);
                                                 setIsEditOpen(true);
                                             }}
-                                            className={`${actionButtons} hover:bg-green-100`}
+                                            className={`${actionButtons} hover:bg-green-100 hover:text-green-600`}
                                         >
-                                            <Pen className="w-4 h-4" />
+                                            <Pen className="w-4 h-4 " />
                                         </button>
 
                                         {/* DELETE */}
@@ -105,7 +111,7 @@ function InventoryTable() {
                                                 setSelectedItem(item);
                                                 setIsDeleteOpen(true);
                                             }}
-                                            className={`${actionButtons} hover:bg-red-100`}
+                                            className={`${actionButtons} hover:bg-red-100 hover:text-red-600`}
                                         >
                                             <Trash className="w-4 h-4" />
                                         </button>
