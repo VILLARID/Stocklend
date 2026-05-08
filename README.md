@@ -1,88 +1,110 @@
-<h1>📦 Stocklend</h1>
+# 🚀 Stocklend
 
-<p>Sistema de gestión de inventario y préstamos de ítems.</p>
+Modern inventory and loan management system designed to manage kitchen equipment, borrowed items, and stock control with a clean and scalable interface.
 
-<hr>
+Built with React, TailwindCSS, and reusable component architecture.
 
-<h2>📌 Descripción</h2>
-<p><strong>Stocklend</strong> es un sistema backend que permite administrar un inventario de materiales y gestionar préstamos a usuarios (alumnos), donde un administrador controla la entrega y devolución de los ítems.</p>
+---
 
-<hr>
+# ✨ Current Features
 
-<h2>🚧 Estado del proyecto</h2>
-<p>En desarrollo activo. Actualmente enfocado en la construcción del backend y endpoints principales.</p>
+## 📊 Dashboard
+- Statistics overview cards
+- Available and borrowed items tracking
+- Responsive dashboard layout
+- Recent activity section
 
-<hr>
+## 📦 Inventory Management
+- Inventory table
+- Category visualization
+- Stock quantity management
+- Modern and clean UI
+- Scalable table structure
 
-<h2>🛠️ Tecnologías</h2>
-<ul>
-  <li>Node.js</li>
-  <li>Express</li>
-  <li>MariaDB</li>
-  <li>SQL puro</li>
-</ul>
+## 🤝 Loans Management
+- Interactive loans table
+- Loan detail modal
+- Borrower information display
+- Borrowed items list
+- Return actions
+- Clickable table rows
+- Dynamic mock data integration
 
-<hr>
+## 🧭 Navigation & Layout
+- Responsive sidebar
+- Dynamic navbar titles
+- Reusable layout system
+- Smooth transitions and hover effects
+- Consistent spacing and UI patterns
 
-<h2>🗄️ Estructura de la base de datos</h2>
-<p>Tablas principales:</p>
+---
 
-<ul>
-  <li><code>administrators</code></li>
-  <li><code>borrowers</code></li>
-  <li><code>categories</code></li>
-  <li><code>item_types</code></li>
-  <li><code>loans</code></li>
-</ul>
+# 🛠 Tech Stack
 
-<h3>🔗 Relación principal</h3>
-<p>Un <strong>administrador</strong> gestiona los préstamos cuando un <strong>usuario (borrower)</strong> solicita un ítem del inventario.</p>
+## ⚡ Frontend
+- React
+- React Router DOM
+- TailwindCSS
+- Lucide React
 
-<hr>
+---
 
-<h2>✅ Funcionalidades actuales</h2>
-<ul>
-  <li>Crear préstamos</li>
-  <li>Devolver préstamos</li>
-  <li>Consultar préstamos</li>
-  <li>Endpoints básicos en desarrollo</li>
-</ul>
+# 🚧 Development Progress
 
-<hr>
+| Module | Status |
+|--------|--------|
+| 📊 Dashboard | ✅ Completed |
+| 🧭 Sidebar | ✅ Completed |
+| 📌 Navbar | ✅ Completed |
+| 📦 Inventory Page | ✅ Completed |
+| 🤝 Loans Page | 🟡 80% Completed |
+| 🕘 History Page | 🔄 In Progress |
+| 🔗 Backend Integration | ⏳ Pending |
 
-<h2>⚙️ Ejecución del proyecto</h2>
+---
 
-<h3>1. Instalar dependencias</h3>
-<pre><code>npm install</code></pre>
+# 🎨 UI / UX Goals
 
-<h3>2. Configurar variables de entorno</h3>
-<p>Crear un archivo <code>.env</code> con la configuración necesaria (base de datos, puerto, etc.)</p>
+- Minimal and modern interface
+- Clean typography and spacing
+- Reusable components
+- Responsive design
+- Professional dashboard experience
+- Smooth interactions and animations
 
-<h3>3. Ejecutar el servidor</h3>
-<pre><code>node server.js</code></pre>
+---
 
-<ul>
-  <li>Backend: <code>http://localhost:3000</code></li>
-  <li>Base de datos: <code>3008</code></li>
-</ul>
+# 📌 Upcoming Features
 
-<hr>
+- 🔐 Authentication system
+- 🗄 Backend integration
+- 🌐 API connection
+- 🔍 Search and filters
+- 📄 Pagination
+- 🔔 Notifications
+- 🌙 Dark mode
+- 📈 Analytics section
+- 🧾 Loan history tracking
 
-<h2>🚀 Próximas mejoras</h2>
-<ul>
-  <li>Frontend</li>
-  <li>Organización en carpetas</li>
-  <li>Validación de datos</li>
-  <li>Mejor estructura de endpoints</li>
-  <li>Autenticación</li>
-</ul>
+---
 
-<hr>
+# ⚙️ Installation
 
-<h2>💭 Motivación</h2>
-<p>Proyecto creado para practicar backend y diseño de sistemas reales de inventario y préstamos.</p>
+```bash
+# Clone repository
+git clone <repository-url>
 
-<hr>
+# Install dependencies
+npm install
 
-<h2>📌 Notas</h2>
-<p>Actualmente solo backend. El frontend será implementado en la siguiente fase.</p>
+# Start development server
+npm run dev
+```
+
+---
+
+# 👨‍💻 Development Notes
+
+Stocklend is being developed with a scalable frontend architecture focused on maintainability, reusable UI patterns, and professional user experience.
+
+The current phase focuses on building a polished frontend before integrating backend services and database functionality.
