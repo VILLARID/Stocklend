@@ -3,3 +3,13 @@
 body {
     background-color: #F8FAFC;
 }
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+  height: 0;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

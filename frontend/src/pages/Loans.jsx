@@ -4,10 +4,12 @@ import { Plus } from "lucide-react";
 import GeneralCards from "../components/loans/GeneralCrads";
 import LoansTable from "../components/loans/LoansTable";
 import LoanDetailModal from "../components/loans/LoanDetailModal";
+import CreateLoan from "../components/loans/CreateLoan";
 
 function Loans() {
 
     const [selectedLoan, setSelectedLoan] = useState(null);
+    const [isCreateOpen, setIsCreateOpen] = useState(false);
 
     const loans = [
         {
@@ -67,6 +69,7 @@ function Loans() {
 
                     <div>
                         <button
+                            onClick={() => setIsCreateOpen(true)}
                             className="flex items-center gap-2 bg-[#10b981] text-white rounded-2xl px-5 py-2 cursor-pointer hover:scale-105 hover:bg-[#059769] duration-150"
                         >
                             <Plus size={18} />
@@ -97,6 +100,10 @@ function Loans() {
                     />
                 )}
 
+                <CreateLoan
+                    isOpen={isCreateOpen}
+                    onClose={() => setIsCreateOpen(false)}
+                />
             </div>
         </>
     );
