@@ -1,8 +1,5 @@
 const pool = require("../config/db");
 
-// ===============================
-// 📊 RESUMEN
-// ===============================
 const getSummary = async () => {
     let conn;
 
@@ -48,9 +45,6 @@ const getSummary = async () => {
     }
 };
 
-// ===============================
-// 🕒 ACTIVIDAD RECIENTE
-// ===============================
 const getRecentActivity = async () => {
     let conn;
 
