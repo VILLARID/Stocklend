@@ -1,16 +1,15 @@
 meta {
-  name: Summary
+  name: Get Loans
   type: http
-  seq: 1
+  seq: 6
 }
 
 get {
-  url: http://localhost:3000/api/dashboard
+  url: http://localhost:3000/api/loans
   body: none
   auth: inherit
 }
 
 settings {
   encodeUrl: true
-  timeout: 0
 }

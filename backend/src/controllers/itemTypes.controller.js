@@ -1,69 +1,88 @@
 const itemTypesService = require("../services/itemTypes.service");
 
-// GET
-const getAllItemTypes = async (req, res) => {
+const getAll = async (req, res) => {
     try {
-        const item_types = await itemTypesService.getAllItemTypes();
+        const data = await itemTypesService.getAll();
 
         res.json({
             success: true,
-            count: item_types.length,
-            data: item_types,
+            data
         });
 
     } catch (error) {
-        console.error("Error fetching item_types:", error);
+        console.error("GetAll error:", error);
 
         res.status(500).json({
             success: false,
-            message: "Error fetching item types",
+            message: "Error fetching items"
         });
     }
 };
 
-// CREATE
-const createItemType = async (req, res) => {
+const create = async (req, res) => {
     try {
-        const { name, description, category_id, total_quantity } = req.body;
+        const result = await itemTypesService.create(req.body);
 
-        if (!name || !category_id || total_quantity === undefined) {
-            return res.status(400).json({
-                success: false,
-                message: "name, category_id and total_quantity are required",
-            });
-        }
-
-        if (total_quantity < 0) {
-            return res.status(400).json({
-                success: false,
-                message: "total_quantity cannot be negative",
-            });
-        }
-
-        const result = await itemTypesService.createItemType({
-            name,
-            description,
-            category_id,
-            total_quantity,
-        });
-
-        res.status(201).json({
+        res.json({
             success: true,
-            message: "Item type created successfully",
-            insertedId: result.insertId ? result.insertId.toString() : null,
+            data: result
         });
 
     } catch (error) {
-        console.error("Controller error:", error);
+        console.error("Create error:", error);
 
         res.status(500).json({
             success: false,
-            message: "Error creating item type",
+            message: "Error creating item"
+        });
+    }
+};
+
+const update = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const result = await itemTypesService.update(id, req.body);
+
+        res.json({
+            success: true,
+            data: result
+        });
+
+    } catch (error) {
+        console.error("Update error:", error);
+
+        res.status(500).json({
+            success: false,
+            message: "Error updating item"
+        });
+    }
+};
+
+const remove = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const result = await itemTypesService.remove(id);
+
+        res.json({
+            success: true,
+            data: result
+        });
+
+    } catch (error) {
+        console.error("Delete error:", error);
+
+        res.status(500).json({
+            success: false,
+            message: "Error deleting item"
         });
     }
 };
 
 module.exports = {
-    getAllItemTypes,
-    createItemType,
+    getAll,
+    create,
+    update,
+    remove
 };

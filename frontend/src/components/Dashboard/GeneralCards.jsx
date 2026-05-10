@@ -19,9 +19,9 @@ function GeneralCards() {
 
             try {
 
-                const data = await getDashboardStats();
-
-                setStats(data);
+                const res = await getDashboardStats();
+                
+                setStats(res.data);
 
             } catch (error) {
 
@@ -39,35 +39,35 @@ function GeneralCards() {
         "bg-white flex-1 rounded-3xl shadow-sm p-5 flex flex-col gap-4 border border-gray-100";
 
     const mockData = [
-    {
-        name: "Total de artículos",
-        icon: Package,
-        number: stats?.total_items || 0,
-        color: "text-gray-500",
-        bg: "bg-gray-100"
-    },
-    {
-        name: "Artículos disponibles",
-        icon: CircleCheckBig,
-        number: stats?.available_items || 0,
-        color: "text-green-500",
-        bg: "bg-green-100"
-    },
-    {
-        name: "Artículos prestados",
-        icon: TrendingUp,
-        number: stats?.borrowed_items || 0,
-        color: "text-blue-500",
-        bg: "bg-blue-100"
-    },
-    {
-        name: "Artículos no devueltos",
-        icon: CircleAlert,
-        number: stats?.not_returned_items || 0,
-        color: "text-red-500",
-        bg: "bg-red-100"
-    },
-];
+        {
+            name: "Total de artículos",
+            icon: Package,
+            number: stats?.total_items || 0,
+            color: "text-gray-500",
+            bg: "bg-gray-100"
+        },
+        {
+            name: "Artículos disponibles",
+            icon: CircleCheckBig,
+            number: stats?.available_items || 0,
+            color: "text-green-500",
+            bg: "bg-green-100"
+        },
+        {
+            name: "Artículos prestados",
+            icon: TrendingUp,
+            number: stats?.borrowed_items || 0,
+            color: "text-blue-500",
+            bg: "bg-blue-100"
+        },
+        {
+            name: "Artículos no devueltos",
+            icon: CircleAlert,
+            number: stats?.not_returned_items || 0,
+            color: "text-red-500",
+            bg: "bg-red-100"
+        },
+    ];
 
     return (
         <div className="flex gap-4">

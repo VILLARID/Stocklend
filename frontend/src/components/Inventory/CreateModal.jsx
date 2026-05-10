@@ -1,86 +1,145 @@
-function CreateModal({ isOpen, onClose }) {
+import { useEffect, useState } from "react";
+import { createItem } from "../../api/inventory";
+import { getCategories } from "../../api/categories";
+
+function CreateModal({ isOpen, onClose, refresh }) {
+
+    const [form, setForm] = useState({
+        name: "",
+        category_id: "",
+        total_quantity: 0
+    });
+
+    const [categories, setCategories] = useState([]);
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        const fetchCategories = async () => {
+            try {
+                const res = await getCategories();
+
+                const data =
+                    res?.data?.data ||
+                    res?.data ||
+                    [];
+
+                setCategories(Array.isArray(data) ? data : []);
+            } catch (err) {
+                console.error("Error loading categories:", err);
+                setCategories([]);
+            }
+        };
+
+        if (isOpen) fetchCategories();
+    }, [isOpen]);
 
     if (!isOpen) return null;
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+
+        try {
+            await createItem(form);
+
+            refresh?.();
+            onClose();
+
+            setForm({
+                name: "",
+                category_id: "",
+                total_quantity: 0
+            });
+
+        } catch (err) {
+            console.error("Create item error:", err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50">
 
-            <div className="bg-white w-105 rounded-2xl shadow-2xl overflow-hidden">
+            <div className="bg-white w-110 rounded-3xl shadow-2xl overflow-hidden">
 
-                {/* Header */}
-                <div className="flex justify-between items-center px-6 py-5 border-b border-gray-200">
-
-                    <h2 className="text-xl font-semibold text-gray-800">
+                <div className="px-6 py-5 border-b bg-gray-50">
+                    <h2 className="text-lg font-semibold text-gray-800">
                         Nuevo artículo
                     </h2>
-
-                    <button
-                        onClick={onClose}
-                        className="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-gray-100 text-gray-500 hover:text-black duration-200"
-                    >
-                        ✕
-                    </button>
-
+                    <p className="text-sm text-gray-500">
+                        Agrega un item al inventario
+                    </p>
                 </div>
 
-                {/* Body */}
-                <form className="flex flex-col gap-5 p-6">
+                <form onSubmit={handleSubmit} className="p-6 space-y-4">
 
-                    {/* Name */}
-                    <div className="flex flex-col gap-2">
-                        <label className="text-sm font-medium text-gray-700">
-                            Nombre
-                        </label>
-
+                    <div>
+                        <label className="text-sm text-gray-600">Nombre</label>
                         <input
-                            type="text"
-                            placeholder="Ej: Batidora KitchenAid"
-                            className="border border-gray-300 px-4 py-3 rounded-xl outline-none focus:ring-2 focus:ring-emerald-500"
+                            placeholder="Ej: Laptop Dell"
+                            className="w-full mt-1 border border-gray-200 p-3 rounded-xl focus:ring-2 focus:ring-emerald-100 focus:border-emerald-400 outline-none"
+                            value={form.name}
+                            onChange={(e) =>
+                                setForm({ ...form, name: e.target.value })
+                            }
                         />
                     </div>
 
-                    {/* Category */}
-                    <div className="flex flex-col gap-2">
-                        <label className="text-sm font-medium text-gray-700">
-                            Categoría
-                        </label>
+                    <div>
+                        <label className="text-sm text-gray-600">Categoría</label>
 
-                        <input
-                            type="text"
-                            placeholder="Ej: Electrodomésticos"
-                            className="border border-gray-300 px-4 py-3 rounded-xl outline-none focus:ring-2 focus:ring-emerald-500"
-                        />
+                        <select
+                            className="w-full mt-1 border border-gray-200 p-3 rounded-xl bg-white focus:ring-2 focus:ring-emerald-100 focus:border-emerald-400 outline-none appearance-none"
+                            value={form.category_id}
+                            onChange={(e) =>
+                                setForm({
+                                    ...form,
+                                    category_id: Number(e.target.value)
+                                })
+                            }
+                        >
+                            <option value="">Selecciona una categoría</option>
+
+                            {(Array.isArray(categories) ? categories : []).map((cat) => (
+                                <option key={cat.id} value={cat.id}>
+                                    {cat.name}
+                                </option>
+                            ))}
+                        </select>
                     </div>
 
-                    {/* Quantity */}
-                    <div className="flex flex-col gap-2">
-                        <label className="text-sm font-medium text-gray-700">
-                            Cantidad
-                        </label>
-
+                    <div>
+                        <label className="text-sm text-gray-600">Cantidad total</label>
                         <input
                             type="number"
-                            placeholder="Ej: 12"
-                            className="border border-gray-300 px-4 py-3 rounded-xl outline-none focus:ring-2 focus:ring-emerald-500"
+                            className="w-full mt-1 border border-gray-200 p-3 rounded-xl focus:ring-2 focus:ring-emerald-100 focus:border-emerald-400 outline-none"
+                            value={form.total_quantity}
+                            onChange={(e) =>
+                                setForm({
+                                    ...form,
+                                    total_quantity: Number(e.target.value)
+                                })
+                            }
                         />
                     </div>
 
-                    {/* Actions */}
                     <div className="flex gap-3 pt-2">
 
                         <button
                             type="button"
                             onClick={onClose}
-                            className="w-1/2 px-5 py-2.5 rounded-xl border border-gray-300 hover:bg-gray-100 duration-200"
+                            className="w-1/2 py-2.5 rounded-xl border text-gray-600 hover:bg-gray-100"
                         >
                             Cancelar
                         </button>
 
                         <button
                             type="submit"
-                            className="w-1/2 px-5 py-2.5 rounded-xl bg-emerald-500 text-white hover:bg-emerald-600 duration-200"
+                            disabled={loading}
+                            className="w-1/2 py-2.5 rounded-xl bg-emerald-500 text-white hover:bg-emerald-600 disabled:opacity-50"
                         >
-                            Crear artículo
+                            {loading ? "Creando..." : "Crear"}
                         </button>
 
                     </div>
@@ -90,7 +149,7 @@ function CreateModal({ isOpen, onClose }) {
             </div>
 
         </div>
-    )
+    );
 }
 
 export default CreateModal;

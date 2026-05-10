@@ -1,7 +1,7 @@
 const pool = require("../config/db");
 
 // GET ALL
-const getAllItemTypes = async () => {
+const getAll = async () => {
     let conn;
 
     try {
@@ -9,23 +9,18 @@ const getAllItemTypes = async () => {
 
         const rows = await conn.query(`
             SELECT 
-                id, 
-                name, 
-                description, 
-                total_quantity, 
-                available_quantity, 
-                category_id, 
-                created_at, 
-                updated_at 
-            FROM item_types 
-            ORDER BY id DESC
+                it.id,
+                it.name,
+                it.description,
+                it.total_quantity,
+                it.available_quantity,
+                c.name AS category
+            FROM item_types it
+            JOIN categories c ON it.category_id = c.id
+            ORDER BY it.id DESC
         `);
 
-        return rows || [];
-
-    } catch (error) {
-        console.error("Error GET item_types:", error);
-        throw error;
+        return rows;
 
     } finally {
         if (conn) conn.release();
@@ -33,33 +28,69 @@ const getAllItemTypes = async () => {
 };
 
 // CREATE
-const createItemType = async ({ name, description, category_id, total_quantity }) => {
+const create = async (data) => {
     let conn;
 
     try {
         conn = await pool.getConnection();
 
         const result = await conn.query(`
-            INSERT INTO item_types (
-                name,
-                description,
-                category_id,
-                total_quantity,
-                available_quantity
-            ) VALUES (?, ?, ?, ?, ?)
+            INSERT INTO item_types (name, description, category_id, total_quantity, available_quantity)
+            VALUES (?, ?, ?, ?, ?)
         `, [
-            name,
-            description || null,
-            category_id,
-            total_quantity,
-            total_quantity
+            data.name,
+            data.description,
+            data.category_id,
+            data.total_quantity,
+            data.available_quantity
         ]);
 
         return result;
 
-    } catch (error) {
-        console.error("Error CREATE item_type:", error);
-        throw error;
+    } finally {
+        if (conn) conn.release();
+    }
+};
+
+// UPDATE
+const update = async (id, data) => {
+    let conn;
+
+    try {
+        conn = await pool.getConnection();
+
+        const result = await conn.query(`
+            UPDATE item_types
+            SET name = ?, description = ?, category_id = ?, total_quantity = ?, available_quantity = ?
+            WHERE id = ?
+        `, [
+            data.name,
+            data.description,
+            data.category_id,
+            data.total_quantity,
+            data.available_quantity,
+            id
+        ]);
+
+        return result;
+
+    } finally {
+        if (conn) conn.release();
+    }
+};
+
+// DELETE
+const remove = async (id) => {
+    let conn;
+
+    try {
+        conn = await pool.getConnection();
+
+        const result = await conn.query(`
+            DELETE FROM item_types WHERE id = ?
+        `, [id]);
+
+        return result;
 
     } finally {
         if (conn) conn.release();
@@ -67,6 +98,8 @@ const createItemType = async ({ name, description, category_id, total_quantity }
 };
 
 module.exports = {
-    getAllItemTypes,
-    createItemType,
+    getAll,
+    create,
+    update,
+    remove
 };

@@ -1,24 +1,37 @@
-const dashboardService = require("../services/dashboard.service");
+import dashboardService from "../services/dashboard.service.js";
 
-const getSummary = async (req, res) => {
+export const getDashboardStats = async (req, res) => {
     try {
         const data = await dashboardService.getSummary();
 
         res.json({
             success: true,
-            data,
+            data
         });
-
     } catch (error) {
-        console.error("Controller error:", error);
+        console.error("Dashboard summary error:", error);
 
         res.status(500).json({
             success: false,
-            message: "Error fetching dashboard summary",
+            message: "Error fetching dashboard summary"
         });
     }
 };
 
-module.exports = {
-    getSummary,
+export const getRecentActivity = async (req, res) => {
+    try {
+        const data = await dashboardService.getRecentActivity();
+
+        res.json({
+            success: true,
+            data
+        });
+    } catch (error) {
+        console.error("Dashboard activity error:", error);
+
+        res.status(500).json({
+            success: false,
+            message: "Error fetching recent activity"
+        });
+    }
 };

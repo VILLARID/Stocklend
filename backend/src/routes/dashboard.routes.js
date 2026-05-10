@@ -1,38 +1,9 @@
-const express = require("express");
-const router = express.Router();
+import { Router } from "express";
+import { getDashboardStats, getRecentActivity } from "../controllers/dashboard.controller.js";
 
-const { getSummary, getRecentActivity } = require("../services/dashboard.service");
+const router = Router();
 
-router.get("/", async (req, res) => {
-  try {
-    const summary = await getSummary();
-    res.json(summary);
+router.get("/", getDashboardStats);
+router.get("/activity", getRecentActivity);
 
-  } catch (error) {
-    console.error("Dashboard error:", error);
-
-    res.status(500).json({
-      success: false,
-      error: "Dashboard error",
-      detail: error.message
-    });
-  }
-});
-
-router.get("/activity", async (req, res) => {
-  try {
-    const activity = await getRecentActivity();
-    res.json(activity);
-
-  } catch (error) {
-    console.error("Activity error:", error);
-
-    res.status(500).json({
-      success: false,
-      error: "Activity error",
-      detail: error.message
-    });
-  }
-});
-
-module.exports = router;
+export default router;

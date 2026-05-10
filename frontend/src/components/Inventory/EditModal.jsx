@@ -1,86 +1,109 @@
-function EditModal({ isOpen, onClose, item }) {
+import { updateItem } from "../../api/inventory";
+import { useState, useEffect } from "react";
+
+function EditModal({ isOpen, onClose, item, refresh, categories = [] }) {
+
+    const [form, setForm] = useState({
+        name: "",
+        category_id: "",
+        total_quantity: 0
+    });
+
+    useEffect(() => {
+        if (item) {
+            setForm({
+                name: item.name || "",
+                category_id: item.category_id ? Number(item.category_id) : "",
+                total_quantity: item.total_quantity ?? 0
+            });
+        }
+    }, [item]);
 
     if (!isOpen) return null;
 
+    const handleUpdate = async (e) => {
+        e.preventDefault();
+
+        try {
+            await updateItem(item.id, form);
+            refresh?.();
+            onClose();
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
     return (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center">
 
-            <div className="bg-white w-105 rounded-2xl shadow-2xl overflow-hidden">
+            <div className="bg-white w-[420px] rounded-2xl p-6">
 
-                {/* Header */}
-                <div className="flex justify-between items-center px-6 py-5 border-b border-gray-200">
+                <h2 className="text-lg font-semibold mb-4">
+                    Editar artículo
+                </h2>
 
-                    <h2 className="text-xl font-semibold text-gray-800">
-                        Editar artículo
-                    </h2>
+                <form onSubmit={handleUpdate} className="space-y-3">
 
-                    <button
-                        onClick={onClose}
-                        className="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-gray-100 text-gray-500 hover:text-black duration-200"
+                    {/* NAME */}
+                    <input
+                        value={form.name}
+                        className="w-full border p-3 rounded-xl"
+                        onChange={(e) =>
+                            setForm({ ...form, name: e.target.value })
+                        }
+                    />
+
+                    {/* CATEGORY */}
+                    <select
+                        value={form.category_id}
+                        className="w-full border p-3 rounded-xl"
+                        onChange={(e) =>
+                            setForm({
+                                ...form,
+                                category_id: Number(e.target.value)
+                            })
+                        }
                     >
-                        ✕
-                    </button>
+                        <option value="">
+                            Selecciona categoría
+                        </option>
 
-                </div>
+                        {(Array.isArray(categories) ? categories : []).map((cat) => (
+                            <option key={cat.id} value={cat.id}>
+                                {cat.name}
+                            </option>
+                        ))}
+                    </select>
 
-                {/* Body */}
-                <form className="flex flex-col gap-5 p-6">
+                    {/* STOCK */}
+                    <input
+                        type="number"
+                        value={form.total_quantity}
+                        className="w-full border p-3 rounded-xl"
+                        onChange={(e) =>
+                            setForm({
+                                ...form,
+                                total_quantity: Number(e.target.value)
+                            })
+                        }
+                    />
 
-                    {/* Name */}
-                    <div className="flex flex-col gap-2">
-                        <label className="text-sm font-medium text-gray-700">
-                            Nombre
-                        </label>
-
-                        <input
-                            type="text"
-                            defaultValue={item?.name}
-                            className="border border-gray-300 px-4 py-3 rounded-xl outline-none focus:ring-2 focus:ring-emerald-500"
-                        />
-                    </div>
-
-                    {/* Category */}
-                    <div className="flex flex-col gap-2">
-                        <label className="text-sm font-medium text-gray-700">
-                            Categoría
-                        </label>
-
-                        <input
-                            type="text"
-                            defaultValue={item?.category}
-                            className="border border-gray-300 px-4 py-3 rounded-xl outline-none focus:ring-2 focus:ring-emerald-500"
-                        />
-                    </div>
-
-                    {/* Quantity */}
-                    <div className="flex flex-col gap-2">
-                        <label className="text-sm font-medium text-gray-700">
-                            Cantidad
-                        </label>
-
-                        <input
-                            type="number"
-                            defaultValue={item?.stock}
-                            className="border border-gray-300 px-4 py-3 rounded-xl outline-none focus:ring-2 focus:ring-emerald-500"
-                        />
-                    </div>
-
-                    {/* Actions */}
-                    <div className="flex gap-3 pt-2">
+                    {/* BUTTONS */}
+                    <div className="flex gap-2">
 
                         <button
                             type="button"
                             onClick={onClose}
-                            className="w-1/2 px-5 py-2.5 rounded-xl border border-gray-300 hover:bg-gray-100 duration-200"
+                            className="w-1/2 border p-2 rounded-xl"
                         >
                             Cancelar
                         </button>
 
                         <button
                             type="submit"
-                            className="w-1/2 px-5 py-2.5 rounded-xl bg-emerald-500 text-white hover:bg-emerald-600 duration-200"
+                            className="w-1/2 bg-emerald-500 text-white p-2 rounded-xl"
                         >
-                            Guardar cambios
+                            Guardar
                         </button>
 
                     </div>
@@ -90,7 +113,7 @@ function EditModal({ isOpen, onClose, item }) {
             </div>
 
         </div>
-    )
+    );
 }
 
 export default EditModal;

@@ -1,24 +1,12 @@
-require("dotenv").config();
-
 const express = require("express");
-const cors = require("cors");
-
 const app = express();
 
-app.use(cors());
+const dashboardRoutes = require("./routes/dashboard.routes"); // o donde esté
+
 app.use(express.json());
 
-// Routes
-const healthRoutes = require("./routes/health.routes");
-const itemTypesRoutes = require("./routes/itemTypes.routes");
-const borrowersRoutes = require("./routes/borrowers.routes");
-const loansRoutes = require("./routes/loans.routes");
-const dashboardRoutes = require("./routes/dashboard.routes");
+app.use("/dashboard", dashboardRoutes);
 
-app.use("/api/health", healthRoutes);
-app.use("/api/item-types", itemTypesRoutes);
-app.use("/api/borrowers", borrowersRoutes);
-app.use("/api/loans", loansRoutes);
-app.use("/api/dashboard", dashboardRoutes);
-
-module.exports = app;
+app.listen(3000, () => {
+    console.log("Server running on port 3000");
+});

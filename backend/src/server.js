@@ -1,28 +1,26 @@
-const express = require("express");
-const cors = require("cors");
+import express from "express";
+import cors from "cors";
+
+import dashboardRoutes from "./routes/dashboard.routes.js";
+import inventoryRoutes from "./routes/inventory.routes.js";
+import categoryRoutes from "./routes/category.routes.js";
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+    origin: "http://localhost:5173",
+    credentials: true
+}));
+
 app.use(express.json());
 
 // routes
-const dashboardRoutes = require("./routes/dashboard.routes");
-const loansRoutes = require("./routes/loans.routes");
-const itemTypesRoutes = require("./routes/itemTypes.routes");
-
 app.use("/dashboard", dashboardRoutes);
-app.use("/loans", loansRoutes);
-app.use("/item-types", itemTypesRoutes);
+app.use("/inventory", inventoryRoutes);
+app.use("/categories", categoryRoutes);
 
-app.get("/", (req, res) => {
-  res.json({
-    message: "Stocklend backend running"
-  });
-});
-
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
-  console.log(`Stocklend backend running on port ${PORT}`);
+    console.log("Server running on port", PORT);
 });

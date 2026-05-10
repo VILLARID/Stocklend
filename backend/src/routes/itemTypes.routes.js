@@ -1,12 +1,11 @@
 const express = require("express");
 const router = express.Router();
 
-const itemTypesController = require("../controllers/itemTypes.controller");
+const controller = require("../controllers/itemTypes.controller");
 
-// GET
-router.get("/", itemTypesController.getAllItemTypes);
-
-// POST
-router.post("/", itemTypesController.createItemType);
+router.get("/", controller.getAll);
+router.post("/", controller.create);
+router.put("/:id", controller.update);
+router.delete("/:id", controller.remove);
 
 module.exports = router;
