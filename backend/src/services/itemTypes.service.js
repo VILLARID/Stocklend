@@ -1,6 +1,5 @@
-const pool = require("../config/db");
+import pool from "../config/db.js";
 
-// GET ALL
 const getAll = async () => {
     let conn;
 
@@ -27,7 +26,32 @@ const getAll = async () => {
     }
 };
 
-// CREATE
+const getAvailable = async () => {
+    let conn;
+
+    try {
+        conn = await pool.getConnection();
+
+        const rows = await conn.query(`
+            SELECT 
+                it.id,
+                it.name,
+                it.description,
+                it.available_quantity AS stock,
+                c.name AS category
+            FROM item_types it
+            JOIN categories c ON it.category_id = c.id
+            WHERE it.available_quantity > 0
+            ORDER BY it.name ASC
+        `);
+
+        return rows;
+
+    } finally {
+        if (conn) conn.release();
+    }
+};
+
 const create = async (data) => {
     let conn;
 
@@ -52,7 +76,6 @@ const create = async (data) => {
     }
 };
 
-// UPDATE
 const update = async (id, data) => {
     let conn;
 
@@ -79,7 +102,6 @@ const update = async (id, data) => {
     }
 };
 
-// DELETE
 const remove = async (id) => {
     let conn;
 
@@ -97,8 +119,9 @@ const remove = async (id) => {
     }
 };
 
-module.exports = {
+export default {
     getAll,
+    getAvailable,
     create,
     update,
     remove

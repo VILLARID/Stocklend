@@ -1,10 +1,5 @@
 import { useEffect, useState } from "react";
-
-import {
-    ArrowUpRight,
-    CheckCircle2
-} from "lucide-react";
-
+import { ArrowUpRight, CheckCircle2 } from "lucide-react";
 import { getRecentActivity } from "../../api/dashboard";
 
 function RecentActivity() {
@@ -15,65 +10,28 @@ function RecentActivity() {
     useEffect(() => {
 
         const fetchActivity = async () => {
-
             try {
-
                 const res = await getRecentActivity();
 
-                console.log("RAW API RESPONSE:", res);
+                const data = res.data || [];
 
-                const data = res?.data || res || [];
-
-                const mapped = data.map((item) => ({
-
-                    name:
-                        item.name ||
-                        item.type ||
-                        item.title ||
-                        "Sin nombre",
-
-                    user:
-                        item.user ||
-                        item.user_name ||
-                        item.userName ||
-                        "Usuario desconocido",
-
-                    product:
-                        item.product ||
-                        item.product_name ||
-                        item.productName ||
-                        "Producto desconocido",
-
-                    time:
-                        item.time ||
-                        item.hours ||
-                        1
-
-                }));
-
-                setActivities(mapped);
+                setActivities(data);
 
             } catch (error) {
-
-                console.error("Activity error:", error);
-
+                console.error(error);
                 setActivities([]);
-
             } finally {
-
                 setLoading(false);
-
             }
         };
 
         fetchActivity();
-
     }, []);
 
     if (loading) {
         return (
-            <div className="flex flex-col bg-white w-full h-full rounded-3xl p-6 shadow-sm">
-                <p className="text-gray-400">Cargando actividad...</p>
+            <div className="bg-white w-full h-full rounded-3xl p-6 shadow-sm border border-gray-100">
+                Cargando actividad...
             </div>
         );
     }
@@ -81,47 +39,32 @@ function RecentActivity() {
     return (
         <div className="flex flex-col bg-white w-full h-full rounded-3xl p-6 shadow-sm gap-6 border border-gray-100">
 
-            <div className="flex flex-col gap-1">
-
+            <div>
                 <h2 className="font-semibold text-2xl text-gray-800">
                     Actividad reciente
                 </h2>
-
                 <p className="text-gray-400 text-sm">
                     Últimos movimientos del sistema
                 </p>
-
             </div>
 
             <div className="flex flex-col gap-5">
 
                 {activities.length === 0 ? (
-                    <p className="text-gray-400 text-sm">
-                        No hay actividad reciente
-                    </p>
+                    <p className="text-gray-400 text-sm">Sin actividad</p>
                 ) : (
                     activities.map((item, index) => {
 
-                        const isReturn =
-                            item?.name
-                                ?.toLowerCase()
-                                ?.includes("devolución");
+                        const isReturn = item.type === "return";
 
                         return (
                             <div
                                 key={index}
-                                className="flex items-center justify-between border-b border-gray-100 pb-5 last:border-none last:pb-0"
+                                className="flex items-center justify-between border-b border-gray-100 pb-5 last:border-none"
                             >
-
                                 <div className="flex gap-4 items-center">
 
-                                    <div
-                                        className={`w-12 h-12 rounded-2xl flex items-center justify-center ${
-                                            isReturn
-                                                ? "bg-green-100"
-                                                : "bg-blue-100"
-                                        }`}
-                                    >
+                                    <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${isReturn ? "bg-green-100" : "bg-blue-100"}`}>
 
                                         {isReturn ? (
                                             <CheckCircle2 className="text-green-600 w-6 h-6" />
@@ -132,27 +75,19 @@ function RecentActivity() {
                                     </div>
 
                                     <div>
-
                                         <h3 className="font-semibold text-gray-800">
-                                            {item.name}
+                                            {item.message}
                                         </h3>
 
-                                        <div className="flex gap-2 text-sm text-gray-400 mt-1">
-
-                                            <span>{item.user}</span>
-
-                                            <span>•</span>
-
-                                            <span>{item.product}</span>
-
+                                        <div className="text-sm text-gray-400 mt-1">
+                                            {item.user} • {item.product}
                                         </div>
-
                                     </div>
 
                                 </div>
 
-                                <p className="text-sm text-gray-400 whitespace-nowrap">
-                                    Hace {item.time} horas
+                                <p className="text-sm text-gray-400">
+                                    Hace {item.time || 1} horas
                                 </p>
 
                             </div>

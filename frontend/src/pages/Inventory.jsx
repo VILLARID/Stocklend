@@ -40,26 +40,26 @@ function Inventory() {
 
     return (
         <>
-            <div className="flex flex-col items-start h-full gap-4 bg-[#f9fafb]">
+            <div className="flex flex-col items-start h-full gap-5 bg-[#f9fafb]">
 
-                {/* HEADER (igual al tuyo) */}
-                <div className="flex w-full justify-between">
+                {/* HEADER */}
+                <div className="flex w-full justify-between items-center">
 
                     <div className="flex flex-col">
-                        <h1 className="font-semibold text-3xl">
+                        <h1 className="font-semibold text-3xl text-gray-800">
                             Inventario
                         </h1>
 
-                        <p className="text-gray-400">
+                        <p className="text-gray-400 text-sm">
                             Gestiona los artículos
                         </p>
                     </div>
 
                     <button
                         onClick={() => setIsModalOpen(true)}
-                        className="flex items-center gap-2 bg-emerald-500 text-white rounded-2xl px-5 py-2 hover:scale-105 duration-150"
+                        className="flex items-center gap-2 bg-[#10b981] text-white rounded-2xl px-5 py-2 cursor-pointer hover:scale-105 hover:bg-[#059769] duration-150"
                     >
-                        <Plus size={18} />
+                        <Plus size={16} />
                         Nuevo artículo
                     </button>
 

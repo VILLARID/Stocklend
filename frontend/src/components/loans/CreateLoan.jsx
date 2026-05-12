@@ -1,68 +1,180 @@
 import { useState } from "react";
+
 import CreateLoanStep1 from "./CreateLoanStep1";
-import CreateLoanStep2 from "./CreateLoanStep2";
+import CreateLoanStep2 from "./CreateLoanStep2"
 
 function CreateLoan({ isOpen, onClose }) {
+
   const [step, setStep] = useState(1);
-  const [formData, setFormData] = useState({});
+
+  const [formData, setFormData] = useState({
+    name: "",
+    lastname: "",
+    dni: ""
+  });
 
   if (!isOpen) return null;
 
   const handleClose = () => {
+
     setStep(1);
-    setFormData({});
+
+    setFormData({
+      name: "",
+      lastname: "",
+      dni: ""
+    });
+
     onClose();
   };
 
   return (
-    <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4 backdrop-blur-sm">
+    <div className="
+      fixed inset-0 z-50
+      bg-black/40 backdrop-blur-sm
+      flex items-center justify-center
+      p-6
+    ">
 
-      <div className="bg-white w-full max-w-4xl max-h-[90vh] rounded-2xl shadow-xl flex flex-col overflow-hidden">
+      <div className="
+        w-full max-w-7xl h-[92vh]
+        bg-[#f7f8fa]
+        rounded-[36px]
+        overflow-hidden
+        shadow-2xl
+        flex flex-col
+      ">
 
         {/* HEADER */}
-        <div className="flex justify-between items-start px-8 py-6 border-b border-gray-100 shrink-0">
+        <div className="
+          h-24 shrink-0
+          bg-white
+          border-b border-gray-100
+          px-10
+          flex items-center justify-between
+        ">
 
-          <div>
-            <h2 className="text-2xl font-bold text-gray-800">
-              Nuevo préstamo
-            </h2>
-            <p className="text-sm text-gray-400">
-              Paso {step} de 2
-            </p>
+          {/* LEFT */}
+          <div className="flex items-center gap-5">
+
+            <div className="
+              w-14 h-14 rounded-3xl
+              bg-emerald-50
+              flex items-center justify-center
+              text-2xl
+            ">
+              📦
+            </div>
+
+            <div>
+
+              <h1 className="text-2xl font-bold text-gray-800">
+                Nuevo préstamo
+              </h1>
+
+              <p className="text-sm text-gray-400 mt-1">
+                Registro de artículos y usuarios
+              </p>
+
+            </div>
+
           </div>
 
-          <button
-            onClick={handleClose}
-            className="text-gray-400 hover:text-gray-600 text-2xl"
-          >
-            ✕
-          </button>
+          {/* STEPS */}
+          <div className="flex items-center gap-5">
+
+            {[
+              {
+                id: 1,
+                label: "Usuario"
+              },
+              {
+                id: 2,
+                label: "Artículos"
+              }
+            ].map((item, index) => (
+
+              <div
+                key={item.id}
+                className="flex items-center gap-5"
+              >
+
+                <div className="flex items-center gap-3">
+
+                  <div className={`
+                    w-10 h-10 rounded-2xl
+                    flex items-center justify-center
+                    text-sm font-bold transition
+                    ${step >= item.id
+                      ? "bg-emerald-500 text-white"
+                      : "bg-gray-200 text-gray-500"
+                    }
+                  `}>
+                    {item.id}
+                  </div>
+
+                  <span className={`
+                    text-sm font-semibold
+                    ${step >= item.id
+                      ? "text-emerald-600"
+                      : "text-gray-400"
+                    }
+                  `}>
+                    {item.label}
+                  </span>
+
+                </div>
+
+                {index !== 1 && (
+                  <div className="
+                    w-12 h-0.5
+                    bg-gray-200
+                    rounded-full
+                  " />
+                )}
+
+              </div>
+
+            ))}
+
+          </div>
 
         </div>
 
-        {/* BODY */}
-        <div className="px-8 pt-6 pb-6 flex-1 min-h-0 overflow-hidden">
+        {/* CONTENT */}
+        <div className="flex-1 overflow-hidden p-6">
 
-          {step === 1 && (
-            <CreateLoanStep1
-              onNext={() => setStep(2)}
-              onCancel={handleClose}
-              formData={formData}
-              setFormData={setFormData}
-            />
-          )}
+          <div className="
+            h-full
+            rounded-4xl
+            bg-white
+            border border-gray-100
+            overflow-hidden
+          ">
 
-          {step === 2 && (
-            <CreateLoanStep2
-              onBack={() => setStep(1)}
-              onClose={handleClose}
-              formData={formData}
-            />
-          )}
+            {step === 1 && (
+              <CreateLoanStep1
+                onNext={() => setStep(2)}
+                onCancel={handleClose}
+                formData={formData}
+                setFormData={setFormData}
+              />
+            )}
+
+            {step === 2 && (
+              <CreateLoanStep2
+                onBack={() => setStep(1)}
+                onClose={handleClose}
+                formData={formData}
+              />
+            )}
+
+          </div>
 
         </div>
 
       </div>
+
     </div>
   );
 }

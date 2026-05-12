@@ -1,14 +1,34 @@
-import React from 'react';
+import { useEffect, useState } from "react";
 import { X, User, CreditCard, Calendar, Box } from 'lucide-react';
 
 function LoanDetailModal({ loan, onClose }) {
 
+    const [items, setItems] = useState([]);
+    const [loading, setLoading] = useState(false);
+
     if (!loan) return null;
 
-    const articles = [
-        { name: 'Batidora KitchenAid', cat: 'Electrodomésticos' },
-        { name: 'Licuadora Vitamix', cat: 'Electrodomésticos' }
-    ];
+    useEffect(() => {
+
+        const fetchLoanDetails = async () => {
+            try {
+                setLoading(true);
+
+                const res = await fetch(`http://localhost:3000/loans/${loan.id}/items`);
+
+                const data = await res.json();
+                setItems(data);
+
+            } catch (err) {
+                console.error("Error loading loan items:", err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchLoanDetails();
+
+    }, [loan.id]);
 
     return (
         <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
@@ -31,7 +51,7 @@ function LoanDetailModal({ loan, onClose }) {
                             </h2>
 
                             <p className="text-white/80 text-sm mt-1">
-                                {loan.email}
+                                Préstamo #{loan.id}
                             </p>
 
                         </div>
@@ -56,8 +76,7 @@ function LoanDetailModal({ loan, onClose }) {
                         <div className="bg-gray-50 p-5 rounded-2xl border border-gray-100">
                             <div className="flex items-center gap-2 text-gray-400 mb-2">
                                 <CreditCard className="w-4 h-4" />
-
-                                <span className="text-[11px] font-medium uppercase tracking-[0.15em]">
+                                <span className="text-[11px] uppercase">
                                     DNI / Carnet
                                 </span>
                             </div>
@@ -70,14 +89,13 @@ function LoanDetailModal({ loan, onClose }) {
                         <div className="bg-gray-50 p-5 rounded-2xl border border-gray-100">
                             <div className="flex items-center gap-2 text-gray-400 mb-2">
                                 <Calendar className="w-4 h-4" />
-
-                                <span className="text-[11px] font-medium uppercase tracking-[0.15em]">
+                                <span className="text-[11px] uppercase">
                                     Fecha préstamo
                                 </span>
                             </div>
 
                             <p className="text-gray-800 text-lg font-medium">
-                                {loan.date}
+                                {new Date(loan.date).toLocaleDateString()}
                             </p>
                         </div>
 
@@ -90,44 +108,50 @@ function LoanDetailModal({ loan, onClose }) {
                             Artículos prestados ({loan.articles})
                         </h3>
 
-                        <div className="space-y-3">
+                        {loading ? (
+                            <p className="text-gray-500">Cargando artículos...</p>
+                        ) : (
 
-                            {articles.map((item, index) => (
+                            <div className="space-y-3">
 
-                                <div
-                                    key={index}
-                                    className="flex items-center justify-between p-5 bg-gray-50 rounded-2xl border border-gray-100 hover:bg-gray-100/70 transition-colors"
-                                >
+                                {items.map((item, index) => (
 
-                                    <div className="flex items-center gap-4">
+                                    <div
+                                        key={index}
+                                        className="flex items-center justify-between p-5 bg-gray-50 rounded-2xl border border-gray-100 hover:bg-gray-100/70 transition-colors"
+                                    >
 
-                                        <div className="bg-blue-100 p-3 rounded-xl">
-                                            <Box className="w-5 h-5 text-blue-600" />
+                                        <div className="flex items-center gap-4">
+
+                                            <div className="bg-blue-100 p-3 rounded-xl">
+                                                <Box className="w-5 h-5 text-blue-600" />
+                                            </div>
+
+                                            <div>
+
+                                                <p className="font-medium text-gray-800">
+                                                    {item.name}
+                                                </p>
+
+                                                <p className="text-sm text-gray-500 mt-0.5">
+                                                    {item.category}
+                                                </p>
+
+                                            </div>
+
                                         </div>
 
-                                        <div>
-
-                                            <p className="font-medium text-gray-800">
-                                                {item.name}
-                                            </p>
-
-                                            <p className="text-sm text-gray-500 mt-0.5">
-                                                {item.cat}
-                                            </p>
-
-                                        </div>
+                                        <button className="bg-[#10b981] text-white px-5 py-2 rounded-xl text-sm font-medium hover:bg-[#0da371] transition-colors">
+                                            Devolver
+                                        </button>
 
                                     </div>
 
-                                    <button className="bg-[#10b981] text-white px-5 py-2 rounded-xl text-sm font-medium hover:bg-[#0da371] transition-colors">
-                                        Devolver
-                                    </button>
+                                ))}
 
-                                </div>
+                            </div>
 
-                            ))}
-
-                        </div>
+                        )}
 
                     </div>
 

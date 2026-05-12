@@ -1,4 +1,4 @@
-const itemTypesService = require("../services/itemTypes.service");
+import itemTypesService from "../services/itemTypes.service.js";
 
 const getAll = async (req, res) => {
     try {
@@ -8,13 +8,30 @@ const getAll = async (req, res) => {
             success: true,
             data
         });
-
     } catch (error) {
         console.error("GetAll error:", error);
 
         res.status(500).json({
             success: false,
             message: "Error fetching items"
+        });
+    }
+};
+
+const getAvailable = async (req, res) => {
+    try {
+        const data = await itemTypesService.getAvailable();
+
+        res.json({
+            success: true,
+            data
+        });
+    } catch (error) {
+        console.error("GetAvailable error:", error);
+
+        res.status(500).json({
+            success: false,
+            message: "Error fetching available items"
         });
     }
 };
@@ -27,7 +44,6 @@ const create = async (req, res) => {
             success: true,
             data: result
         });
-
     } catch (error) {
         console.error("Create error:", error);
 
@@ -48,7 +64,6 @@ const update = async (req, res) => {
             success: true,
             data: result
         });
-
     } catch (error) {
         console.error("Update error:", error);
 
@@ -69,7 +84,6 @@ const remove = async (req, res) => {
             success: true,
             data: result
         });
-
     } catch (error) {
         console.error("Delete error:", error);
 
@@ -80,8 +94,9 @@ const remove = async (req, res) => {
     }
 };
 
-module.exports = {
+export default {
     getAll,
+    getAvailable,
     create,
     update,
     remove
