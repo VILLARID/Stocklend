@@ -1,5 +1,5 @@
 import { useState } from "react";
-import HistoryDetailModal from "./HistoryDetailModal";
+import HistoryDetailModal from "./Modal/HistoryDetailModal";
 
 function HistoryTable() {
 

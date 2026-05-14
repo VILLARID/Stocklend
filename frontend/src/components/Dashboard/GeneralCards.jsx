@@ -32,7 +32,7 @@ function GeneralCards() {
     }, []);
 
     const cardStyle =
-        "bg-white flex-1 rounded-3xl shadow-sm p-5 flex flex-col gap-4 border border-gray-100";
+        "bg-white flex-1 rounded-3xl shadow-sm px-5 py-5 flex flex-col border border-gray-100 hover:scale-102 hover:shadow-lg duration-200";
 
     const mockData = [
         {
@@ -43,21 +43,21 @@ function GeneralCards() {
             bg: "bg-gray-100"
         },
         {
-            name: "Disponibles",
+            name: "Artículos disponibles",
             icon: CircleCheckBig,
             number: stats.available_items,
             color: "text-green-500",
             bg: "bg-green-100"
         },
         {
-            name: "Prestados",
+            name: "Artículos en préstamo",
             icon: TrendingUp,
             number: stats.borrowed_items,
             color: "text-blue-500",
             bg: "bg-blue-100"
         },
         {
-            name: "No devueltos",
+            name: "Artículos no devueltos",
             icon: CircleAlert,
             number: stats.not_returned_items,
             color: "text-red-500",

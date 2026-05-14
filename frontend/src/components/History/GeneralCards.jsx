@@ -32,7 +32,7 @@ function GeneralCards() {
                         <Award className="text-yellow-600" />
                     </div>
                 </div>
-                    <p className="text-3xl font-semibold">Batidora</p>
+                <p className="text-3xl font-semibold">Batidora</p>
             </div >
         </>
     )

@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { Pen, Trash } from "lucide-react";
 
-import EditModal from "./EditModal";
-import DeleteModal from "./DeleteModal";
+import EditModal from "./Modal/EditModal";
+import DeleteModal from "./Modal/DeleteModal";
 
 function InventoryTable({
     items = [],
+
     refresh,
     categories = []
 }) {

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Plus } from "lucide-react";
 
 import InventoryTable from "../components/Inventory/InventoryTable";
-import CreateModal from "../components/Inventory/CreateModal";
+import CreateModal from "../components/Inventory/Modal/CreateModal";
 
 import { getItems } from "../api/inventory";
 import { getCategories } from "../api/categories";

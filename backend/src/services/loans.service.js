@@ -6,41 +6,36 @@ export default {
         const conn = await pool.getConnection();
 
         try {
-            const loans = await conn.query(`
-                SELECT 
-                    l.id,
-                    CONCAT(b.first_name, ' ', b.last_name) AS user,
-                    b.dni,
-                    l.loan_date,
-                    l.return_date
-                FROM loans l
-                JOIN borrowers b ON b.id = l.borrower_id
-                ORDER BY l.loan_date DESC
-            `);
 
-            for (let loan of loans) {
-                const items = await conn.query(`
-                    SELECT 
-                        li.quantity,
-                        it.name AS item_name,
-                        c.name AS category
-                    FROM loan_items li
-                    JOIN item_types it ON it.id = li.item_type_id
-                    JOIN categories c ON c.id = it.category_id
-                    WHERE li.loan_id = ?
-                `, [loan.id]);
+            const [loans] = await conn.query(`
+            SELECT 
+                l.id,
+                CONCAT(b.first_name, ' ', b.last_name) AS user,
+                b.dni,
 
-                loan.items = items;
+                it.name AS article,
 
-                loan.status = loan.return_date
-                    ? "Devuelto"
-                    : "Pendiente";
+                l.quantity AS articles,
 
-                loan.articles = items.reduce(
-                    (sum, i) => sum + i.quantity,
-                    0
-                );
-            }
+                l.loan_date AS date,
+                l.return_date,
+
+                CASE
+                    WHEN l.return_date IS NULL
+                    THEN 'Pendiente'
+                    ELSE 'Devuelto'
+                END AS status
+
+            FROM loans l
+
+            JOIN borrowers b
+                ON b.id = l.borrower_id
+
+            JOIN item_types it
+                ON it.id = l.item_type_id
+
+            ORDER BY l.loan_date DESC
+        `);
 
             return loans;
 

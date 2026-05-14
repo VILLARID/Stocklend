@@ -6,12 +6,13 @@ export default {
         const conn = await pool.getConnection();
 
         const [totalItems] = await conn.query(
-            "SELECT COUNT(*) as total FROM item_types"
+            `SELECT SUM(total_quantity) AS total
+                FROM item_types;`
         );
 
-        const [availableItems] = await conn.query(
-            "SELECT SUM(available_quantity) as total FROM item_types"
-        );
+        const [availableItems] = await conn.query(`
+            SELECT SUM(available_quantity) as total FROM item_types
+        `);
 
         const [borrowedItems] = await conn.query(`
         SELECT SUM(quantity) as total

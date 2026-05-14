@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { deleteItem } from "../../api/inventory";
+import { deleteItem } from "../../../api/inventory";
 
 function DeleteModal({ isOpen, onClose, item, refresh }) {
     const [loading, setLoading] = useState(false);
@@ -25,7 +25,7 @@ function DeleteModal({ isOpen, onClose, item, refresh }) {
             <div className="w-full max-w-md rounded-2xl bg-white shadow-2xl border border-gray-100 overflow-hidden animate-in fade-in zoom-in duration-200">
 
                 {/* Header */}
-                <div className="px-6 py-5 bg-gradient-to-r from-red-50 to-white border-b">
+                <div className="px-6 py-5 bg-linear-to-r from-red-50 to-white border-b">
                     <h2 className="text-lg font-semibold text-gray-800">
                         Eliminar artículo
                     </h2>
