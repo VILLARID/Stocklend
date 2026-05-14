@@ -57,9 +57,9 @@ Built with React, TailwindCSS, and reusable component architecture.
 | 🧭 Sidebar | ✅ Completed |
 | 📌 Navbar | ✅ Completed |
 | 📦 Inventory Page | ✅ Completed |
-| 🤝 Loans Page | 🟡 80% Completed |
-| 🕘 History Page | 🔄 In Progress |
-| 🔗 Backend Integration | ⏳ Pending |
+| 🤝 Loans Page | ✅ Completed |
+| 🕘 History Page | ✅ Completed |
+| 🔗 Backend Integration | 🟡 80% Completed |
 
 ---
 
