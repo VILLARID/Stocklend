@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Plus } from "lucide-react";
 
-import GeneralCards from "../components/loans/GeneralCrads";
+import GeneralCards from "../components/loans/GeneralCards";
 import LoansTable from "../components/loans/LoansTable";
-import LoanDetailModal from "../components/loans/LoanDetailModal";
-import CreateLoan from "../components/loans/CreateLoan";
+import LoanDetailModal from "../components/loans/Modal/DetailModal/LoanDetailModal";
+import CreateLoan from "../components/loans/Modal/CreateLoan";
 
 function Loans() {
 
